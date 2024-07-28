@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    View record
+{% endblock %}
+
+{% block body %}
+    <h1>View record</h1>
+    {% if book is defined and book|length %}
+        <dl>
+            <dt>Title</dt>
+            <dd>{{ book.title }}</dd>
+            <dt>Content</dt>
+            <dd>{{ book.content }}</dd>
+        </dl>
+    {% else %}
+        <p>
+            Record not found.
+        </p>
+    {% endif %}
+{% endblock %}
