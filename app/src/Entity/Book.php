@@ -6,8 +6,8 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
-use Monolog\DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Monolog\DateTimeImmutable;
 
 /**
  * Class Book.
@@ -56,7 +56,7 @@ class Book
     /**
      * Created at.
      *
-     * @var /DateTimeImmutable|null
+     * @var \DateTimeImmutable|null /DateTimeImmutable|null
      *
      * @psalm-suppress PropertyNotSetInConstructor
      */
@@ -66,12 +66,19 @@ class Book
     /**
      * Updated at.
      *
-     * @var /DateTimeImmutable|null
+     * @var \DateTimeImmutable|null /DateTimeImmutable|null
      *
      * @psalm-suppress PropertyNotSetInConstructor
      */
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    /**
+     * Category.
+     */
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
 
     /**
      * Getter for Id.
@@ -121,6 +128,7 @@ class Book
      * Setter for author.
      *
      * @param string $author Author
+     *
      * @return Book
      */
     public function setAuthor(string $author): static
@@ -144,6 +152,7 @@ class Book
      * Setter for title.
      *
      * @param string $title Title
+     *
      * @return Book
      */
     public function setTitle(string $title): static
@@ -166,8 +175,9 @@ class Book
     /**
      * Setter for description.
      *
-     * @param string $description
-     * @return Book
+     * @param string $description description
+     *
+     * @return Book return
      */
     public function setDescription(string $description): static
     {
@@ -189,7 +199,9 @@ class Book
     /**
      * Setter for created at.
      *
-     * @param DateTimeImmutable|null $createdAt Created at
+     * @param \DateTimeImmutable $createdAt Created at
+     *
+     * @return Book return
      */
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
@@ -211,7 +223,9 @@ class Book
     /**
      * Setter for updated at.
      *
-     * @param DateTimeImmutable|null $updatedAt Updated at
+     * @param \DateTimeImmutable $updatedAt Updated at
+     *
+     * @return Book return
      */
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
@@ -219,5 +233,24 @@ class Book
 
         return $this;
     }
-}
 
+    /**
+     * @return Category|null Category
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category|null $category Category
+     *
+     * @return $this return
+     */
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+}
