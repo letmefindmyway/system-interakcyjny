@@ -5,12 +5,15 @@
 
 namespace App\Controller;
 
-use App\Repository\BookRepository;
+use App\Entity\Book;
+use App\Form\Type\BookType;
+use App\Service\BookServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class BookController.
@@ -19,22 +22,26 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 class BookController extends AbstractController
 {
     /**
+     * Constructor.
+     *
+     * @param BookServiceInterface $bookService Book service
+     * @param TranslatorInterface  $translator  Translator
+     */
+    public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator)
+    {
+    }
+
+    /**
      * Index action.
      *
-     * @param BookRepository     $bookRepository Book repository
-     * @param PaginatorInterface $paginator      Paginator
-     * @param int                $page           page
+     * @param int $page Page number
      *
      * @return Response HTTP response
      */
     #[Route(name: 'book_index', methods: 'GET')]
-    public function index(BookRepository $bookRepository, PaginatorInterface $paginator, #[MapQueryParameter] int $page = 1): Response
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
-        $pagination = $paginator->paginate(
-            $bookRepository->queryAll(),
-            $page,
-            BookRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
+        $pagination = $this->bookService->getPaginatedList($page);
 
         return $this->render('book/index.html.twig', ['pagination' => $pagination]);
     }
@@ -42,8 +49,7 @@ class BookController extends AbstractController
     /**
      * Show action.
      *
-     * @param BookRepository $repository Book repository
-     * @param int            $id         Book identifier
+     * @param Book $book Book
      *
      * @return Response HTTP response
      */
@@ -53,13 +59,115 @@ class BookController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET'
     )]
-    public function show(BookRepository $repository, int $id): Response
+    public function show(Book $book): Response
     {
-        $book = $repository->findOneById($id);
+        return $this->render('book/show.html.twig', ['book' => $book]);
+    }
+
+    /**
+     * Create action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
+     */
+    #[Route(
+        '/create',
+        name: 'book_create',
+        methods: 'GET|POST',
+    )]
+    public function create(Request $request): Response
+    {
+        $book = new Book();
+        $form = $this->createForm(BookType::class, $book);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->bookService->save($book);
+
+            return $this->redirectToRoute('book_index');
+        }
 
         return $this->render(
-            'book/show.html.twig',
-            ['book' => $book]
+            'book/create.html.twig',
+            ['form' => $form->createView()]
+        );
+    }
+
+    /**
+     * Edit action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/edit', name: 'book_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    public function edit(Request $request, Book $book): Response
+    {
+        $form = $this->createForm(
+            BookType::class,
+            $book,
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('book_edit', ['id' => $book->getId()]),
+            ]
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->bookService->save($book);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render(
+            'book/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'book' => $book,
+            ]
+        );
+    }
+
+    /**
+     * Delete action.
+     *
+     * @param Request  $request  HTTP request
+     * @param Book     $book     Book entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/delete', name: 'book_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    public function delete(Request $request, Book $book): Response
+    {
+        $form = $this->createForm(FormType::class, $book, [
+            'method' => 'DELETE',
+            'action' => $this->generateUrl('book_delete', ['id' => $book->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->bookService->delete($book);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
+
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render(
+            'book/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'book' => $book,
+            ]
         );
     }
 }

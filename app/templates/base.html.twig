@@ -9,11 +9,17 @@
               crossorigin="anonymous">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
               rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     {% endblock %}
 </head>
 <body>
 <main role="main" class="container-fluid">
-    {% block body %}{% endblock %}
+
+    <div class="container-fluid">
+        {% include 'default/_flash_messages.html.twig' %}
+        {% block body %}{% endblock %}
+    </div>
+
 </main>
 {% block javascripts %}
     {# {% block importmap %}{{ importmap('app') }}{% endblock %}#}
