@@ -62,6 +62,10 @@
         <source>title.record_list</source>
         <target>Books list</target>
       </trans-unit>
+      <trans-unit id="title.label_category">
+        <source>title.label_category</source>
+        <target>Category</target>
+      </trans-unit>
       <trans-unit id="title.record_view">
         <source>title.record_view</source>
         <target>Book view #%id%</target>

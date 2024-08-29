@@ -62,6 +62,10 @@
         <source>title.record_list</source>
         <target>Lista ksiazek</target>
       </trans-unit>
+      <trans-unit id="title.label_category">
+        <source>title.label_category</source>
+        <target>Kategoria</target>
+      </trans-unit>
       <trans-unit id="title.record_view">
         <source>title.record_view</source>
         <target>Widok ksiazki #%id%</target>
