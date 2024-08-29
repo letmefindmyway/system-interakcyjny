@@ -14,6 +14,14 @@
         <source>action.show</source>
         <target>Show</target>
       </trans-unit>
+      <trans-unit id="action.edit">
+        <source>action.edit</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="action.delete">
+        <source>action.delete</source>
+        <target>Delete</target>
+      </trans-unit>
       <trans-unit id="action.back_to_list">
         <source>action.back_to_list</source>
         <target>Back to list</target>
@@ -62,9 +70,9 @@
         <source>title.record_list</source>
         <target>Books list</target>
       </trans-unit>
-      <trans-unit id="title.label_category">
-        <source>title.label_category</source>
-        <target>Category</target>
+      <trans-unit id="title.category_list">
+        <source>title.category_list</source>
+        <target>Category list</target>
       </trans-unit>
       <trans-unit id="title.record_view">
         <source>title.record_view</source>
