@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -49,16 +50,9 @@ class BookController extends AbstractController
     /**
      * Show action.
      *
-     * @param Book $book Book
-     *
      * @return Response HTTP response
      */
-    #[Route(
-        '/{id}',
-        name: 'book_show',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: 'GET'
-    )]
+    #[Route('/{id}', name: 'book_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
     public function show(Book $book): Response
     {
         return $this->render('book/show.html.twig', ['book' => $book]);
@@ -71,34 +65,36 @@ class BookController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route(
-        '/create',
-        name: 'book_create',
-        methods: 'GET|POST',
-    )]
+    #[Route('/create', name: 'book_create', methods: 'GET|POST', )]
     public function create(Request $request): Response
     {
         $book = new Book();
-        $form = $this->createForm(BookType::class, $book);
+        $form = $this->createForm(
+            BookType::class,
+            $book,
+            ['action' => $this->generateUrl('book_create')]
+        );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->bookService->save($book);
 
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
             return $this->redirectToRoute('book_index');
         }
 
-        return $this->render(
-            'book/create.html.twig',
-            ['form' => $form->createView()]
-        );
+        return $this->render('book/create.html.twig', ['form' => $form->createView()]);
     }
 
     /**
      * Edit action.
      *
      * @param Request $request HTTP request
-     * @param Book    $book    book
+     * @param Book    $book    Book entity
      *
      * @return Response HTTP response
      */
@@ -120,7 +116,7 @@ class BookController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('message.created_successfully')
+                $this->translator->trans('message.edited_successfully')
             );
 
             return $this->redirectToRoute('book_index');
@@ -146,10 +142,14 @@ class BookController extends AbstractController
     #[Route('/{id}/delete', name: 'book_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     public function delete(Request $request, Book $book): Response
     {
-        $form = $this->createForm(FormType::class, $book, [
-            'method' => 'DELETE',
-            'action' => $this->generateUrl('book_delete', ['id' => $book->getId()]),
-        ]);
+        $form = $this->createForm(
+            FormType::class,
+            $book,
+            [
+                'method' => 'DELETE',
+                'action' => $this->generateUrl('book_delete', ['id' => $book->getId()]),
+            ]
+        );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

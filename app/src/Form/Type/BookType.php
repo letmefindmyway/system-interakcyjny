@@ -6,7 +6,10 @@
 namespace App\Form\Type;
 
 use App\Entity\Book;
+use App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,7 +38,47 @@ class BookType extends AbstractType
             [
                 'label' => 'label.title',
                 'required' => true,
+                'attr' => ['max_length' => 255],
+            ]
+        );
+        $builder->add(
+            'author',
+            TextType::class,
+            [
+                'label' => 'label.author',
+                'required' => true,
                 'attr' => ['max_length' => 64],
+            ]
+        );
+        $builder->add(
+            'releaseYear',
+            DateType::class,
+            [
+                'widget' => 'single_text',
+                'label' => 'label.releaseYear',
+                'required' => true,
+            ]
+        );
+        $builder->add(
+            'category',
+            EntityType::class,
+            [
+                'class' => Category::class,
+                'choice_label' => function ($category): string {
+                    return $category->getTitle();
+                },
+                'label' => 'label.category',
+                'placeholder' => 'label.none',
+                'required' => true,
+            ]
+        );
+        $builder->add(
+            'description',
+            TextType::class,
+            [
+                'label' => 'label.description',
+                'required' => true,
+                'attr' => ['max_length' => 255],
             ]
         );
     }

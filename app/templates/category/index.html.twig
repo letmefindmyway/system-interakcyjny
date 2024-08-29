@@ -9,6 +9,12 @@
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
+            <a  href="{{ url('category_create')}}" title="{{ 'action.create'|trans }} " class="btn btn-primary">
+                {{ 'action.create'|trans }}
+            </a>
+        </div>
+
+        <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
 

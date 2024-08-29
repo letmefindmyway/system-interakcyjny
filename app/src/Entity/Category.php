@@ -9,20 +9,20 @@ use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Category.
- *
- * @psalm-suppress MissingConstructor
  */
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\Table(name: 'categories')]
-#[ORM\UniqueConstraint(name: 'uq_categories_title', columns: ['title'])]
 #[UniqueEntity(fields: ['title'])]
 class Category
 {
     /**
      * Primary key.
+     *
+     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,28 +33,35 @@ class Category
      * Created at.
      */
     #[ORM\Column(type: 'datetime_immutable')]
+    #[Assert\Type(\DateTimeImmutable::class)]
     #[Gedmo\Timestampable(on: 'create')]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt;
 
     /**
      * Updated at.
      */
     #[ORM\Column(type: 'datetime_immutable')]
+    #[Assert\Type(\DateTimeImmutable::class)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeImmutable $updatedAt;
 
     /**
      * Title.
      */
     #[ORM\Column(type: 'string', length: 255)]
-    private ?string $title = null;
+    #[Assert\Type('string')]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 64)]
+    private ?string $title;
 
     /**
      * Slug.
      */
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Type('string')]
+    #[Assert\Length(min: 3, max: 64)]
     #[Gedmo\Slug(fields: ['title'])]
-    private ?string $slug = null;
+    private ?string $slug;
 
     /**
      * Getter for Id.

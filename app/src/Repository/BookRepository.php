@@ -6,12 +6,19 @@
 namespace App\Repository;
 
 use App\Entity\Book;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class BookRepository.
+ *
  * @method Book|null find($id, $lockMode = null, $lockVersion = null)
  * @method Book|null findOneBy(array $criteria, array $orderBy = null)
  * @method Book[]    findAll()
@@ -39,14 +46,42 @@ class BookRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->select('partial book.{id, createdAt, updatedAt, title}')
+            ->select(
+                'partial book.{id, createdAt, updatedAt, title}',
+                'partial category.{id, title}'
+            )
+            ->join('book.category', 'category')
             ->orderBy('book.updatedAt', 'DESC');
+    }
+
+    /**
+     * Count books by category.
+     *
+     * @param Category $category Category
+     *
+     * @return int Number of books in category
+     *
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function countByCategory(Category $category): int
+    {
+        $qb = $this->getOrCreateQueryBuilder();
+
+        return $qb->select($qb->expr()->countDistinct('book.id'))
+            ->where('book.category = :category')
+            ->setParameter(':category', $category)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     /**
      * Save entity.
      *
      * @param Book $book Book entity
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save(Book $book): void
     {
