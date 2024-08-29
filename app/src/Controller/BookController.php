@@ -98,6 +98,7 @@ class BookController extends AbstractController
      * Edit action.
      *
      * @param Request $request HTTP request
+     * @param Book    $book    book
      *
      * @return Response HTTP response
      */
@@ -137,8 +138,8 @@ class BookController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request  $request  HTTP request
-     * @param Book     $book     Book entity
+     * @param Request $request HTTP request
+     * @param Book    $book    Book entity
      *
      * @return Response HTTP response
      */

@@ -35,5 +35,4 @@ interface BookServiceInterface
      * @param Book $book Book entity
      */
     public function delete(Book $book): void;
-
 }
