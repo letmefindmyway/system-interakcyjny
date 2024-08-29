@@ -7,6 +7,7 @@ namespace App\Entity;
 
 use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Monolog\DateTimeImmutable;
 
 /**
@@ -61,6 +62,7 @@ class Book
      * @psalm-suppress PropertyNotSetInConstructor
      */
     #[ORM\Column]
+    #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $createdAt = null;
 
     /**
@@ -71,6 +73,7 @@ class Book
      * @psalm-suppress PropertyNotSetInConstructor
      */
     #[ORM\Column]
+    #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt = null;
 
     /**
@@ -79,6 +82,13 @@ class Book
     #[ORM\ManyToOne(targetEntity: Category::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
+
+    /**
+     * Slug.
+     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Gedmo\Slug(fields: ['title'])]
+    private ?string $slug = null;
 
     /**
      * Getter for Id.
@@ -250,6 +260,30 @@ class Book
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Getter for slug.
+     *
+     * @return string|null slug
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Setter for slug.
+     *
+     * @param string $slug Slug
+     *
+     * @return $this Slug
+     */
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

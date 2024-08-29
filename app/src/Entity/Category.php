@@ -7,6 +7,7 @@ namespace App\Entity;
 
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -32,12 +33,14 @@ class Category
      * Created at.
      */
     #[ORM\Column(type: 'datetime_immutable')]
+    #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $createdAt = null;
 
     /**
      * Updated at.
      */
     #[ORM\Column(type: 'datetime_immutable')]
+    #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt = null;
 
     /**
@@ -45,6 +48,13 @@ class Category
      */
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $title = null;
+
+    /**
+     * Slug.
+     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Gedmo\Slug(fields: ['title'])]
+    private ?string $slug = null;
 
     /**
      * Getter for Id.
@@ -114,5 +124,29 @@ class Category
     public function setTitle(?string $title): void
     {
         $this->title = $title;
+    }
+
+    /**
+     * Getter for slug.
+     *
+     * @return string|null slug
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Setter for slug.
+     *
+     * @param string $slug Slug
+     *
+     * @return $this Slug
+     */
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
