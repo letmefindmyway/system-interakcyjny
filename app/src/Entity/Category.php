@@ -51,7 +51,7 @@ class Category
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Type('string')]
     #[Assert\NotBlank]
-    #[Assert\Length(min: 3, max: 64)]
+    #[Assert\Length(min: 1, max: 64)]
     private ?string $title;
 
     /**
@@ -59,7 +59,7 @@ class Category
      */
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Type('string')]
-    #[Assert\Length(min: 3, max: 64)]
+    #[Assert\Length(min: 1, max: 64)]
     #[Gedmo\Slug(fields: ['title'])]
     private ?string $slug;
 
