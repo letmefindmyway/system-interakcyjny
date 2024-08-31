@@ -6,8 +6,8 @@
 namespace App\Service;
 
 use App\Entity\Category;
-use App\Repository\CategoryRepository;
 use App\Repository\BookRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -37,7 +37,7 @@ class CategoryService implements CategoryServiceInterface
      * @param CategoryRepository $categoryRepository Category repository
      * @param PaginatorInterface $paginator          Paginator
      */
-    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly PaginatorInterface $paginator)
+    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator)
     {
     }
 

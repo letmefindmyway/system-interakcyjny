@@ -10,6 +10,14 @@
         <source>label.actions</source>
         <target>Akcje</target>
       </trans-unit>
+      <trans-unit id="action.create">
+        <source>action.create</source>
+        <target>Dodaj</target>
+      </trans-unit>
+      <trans-unit id="action.save">
+        <source>action.save</source>
+        <target>Zapisz</target>
+      </trans-unit>
       <trans-unit id="action.show">
         <source>action.show</source>
         <target>Pokaz</target>
@@ -28,7 +36,11 @@
       </trans-unit>
       <trans-unit id="title.book_details">
         <source>title.book_details</source>
-        <target>Szczegoly ksiazki</target>
+        <target>Szczegoly ksiazki:</target>
+      </trans-unit>
+      <trans-unit id="title.category_details">
+        <source>title.category_details</source>
+        <target>Szczegoly kategorii:</target>
       </trans-unit>
       <trans-unit id="label.id">
         <source>label.id</source>
@@ -77,6 +89,62 @@
       <trans-unit id="title.record_view">
         <source>title.record_view</source>
         <target>Widok ksiazki #%id%</target>
+      </trans-unit>
+      <trans-unit id="title.category_create">
+        <source>title.category_create</source>
+        <target>Tworzenie kategorii</target>
+      </trans-unit>
+      <trans-unit id="title.category_edit">
+        <source>title.category_edit</source>
+        <target>Edycja kategorii</target>
+      </trans-unit>
+      <trans-unit id="title.category_delete">
+        <source>title.category_delete</source>
+        <target>Usuwanie kategorii</target>
+      </trans-unit>
+      <trans-unit id="title.book_create">
+        <source>title.book_create</source>
+        <target>Tworzenie ksiazki</target>
+      </trans-unit>
+      <trans-unit id="title.book_edit">
+        <source>title.book_edit</source>
+        <target>Edycja ksiazki #%id%</target>
+      </trans-unit>
+      <trans-unit id="title.book_delete">
+        <source>title.book_delete</source>
+        <target>Usuwanie ksiazki #%id%</target>
+      </trans-unit>
+      <trans-unit id="label.author">
+        <source>label.author</source>
+        <target>Autor</target>
+      </trans-unit>
+      <trans-unit id="label.releaseYear">
+        <source>label.releaseYear</source>
+        <target>Rok wydania</target>
+      </trans-unit>
+      <trans-unit id="label.description">
+        <source>label.description</source>
+        <target>Opis</target>
+      </trans-unit>
+      <trans-unit id="label.none">
+        <source>label.none</source>
+        <target>wybierz kategorie</target>
+      </trans-unit>
+      <trans-unit id="message.created_successfully">
+        <source>message.created_successfully</source>
+        <target>Dodano pomyslnie</target>
+      </trans-unit>
+      <trans-unit id="message.edited_successfully">
+        <source>message.edited_successfully</source>
+        <target>Edytowano pomyslnie</target>
+      </trans-unit>
+      <trans-unit id="message.deleted_successfully">
+        <source>message.deleted_successfully</source>
+        <target>Usunieto pomyslnie</target>
+      </trans-unit>
+      <trans-unit id="message.form_error">
+        <source>message.form_error</source>
+        <target>Blad formularza</target>
       </trans-unit>
     </body>
   </file>
