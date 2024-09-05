@@ -8,6 +8,8 @@ namespace App\Repository;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,6 +49,9 @@ class CategoryRepository extends ServiceEntityRepository
      * Save entity.
      *
      * @param Category $category Category entity
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save(Category $category): void
     {

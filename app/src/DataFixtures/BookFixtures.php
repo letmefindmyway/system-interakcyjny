@@ -5,9 +5,13 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Category;
 use App\Entity\Book;
+use App\Entity\Category;
+use App\Entity\Enum\BookStatus;
+use App\Entity\User;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Persistence\ObjectManager;
+use Faker\Generator;
 
 /**
  * Class BookFixtures.
@@ -23,7 +27,7 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
      */
     public function loadData(): void
     {
-        if (!$this->manager instanceof \Doctrine\Persistence\ObjectManager || !$this->faker instanceof \Faker\Generator) {
+        if (!$this->manager instanceof ObjectManager || !$this->faker instanceof Generator) {
             return;
         }
 
@@ -49,6 +53,12 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             $category = $this->getRandomReference('categories');
             $book->setCategory($category);
 
+            // $book->setStatus(BookStatus::from($this->faker->numberBetween(1, 2)));
+
+            /** @var User $creator */
+            $creator = $this->getRandomReference('users');
+            $book->setCreator($creator);
+
             return $book;
         });
 
@@ -61,10 +71,10 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
      *
      * @return string[] of dependencies
      *
-     * @psalm-return array{0: CategoryFixtures::class}
+     * @psalm-return array{0: CategoryFixtures::class, 1: UserFixtures::class}
      */
     public function getDependencies(): array
     {
-        return [CategoryFixtures::class];
+        return [CategoryFixtures::class, UserFixtures::class];
     }
 }

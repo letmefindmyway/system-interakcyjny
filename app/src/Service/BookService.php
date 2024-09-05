@@ -5,10 +5,15 @@
 
 namespace App\Service;
 
+use App\Dto\BookListFiltersDto;
+use App\Dto\BookListInputFiltersDto;
 use App\Entity\Book;
+use App\Entity\User;
 use App\Repository\BookRepository;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
+use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -31,24 +36,29 @@ class BookService implements BookServiceInterface
     /**
      * Constructor.
      *
-     * @param BookRepository     $bookRepository Book repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param BookRepository           $bookRepository  Book repository
+     * @param CategoryServiceInterface $categoryService Category service
+     * @param PaginatorInterface       $paginator       Paginator
      */
-    public function __construct(private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator)
+    public function __construct(private readonly BookRepository $bookRepository, private readonly CategoryServiceInterface $categoryService, private readonly PaginatorInterface $paginator)
     {
     }
 
     /**
      * Get paginated list.
      *
-     * @param int $page Page number
+     * @param int                     $page    Page number
+     * @param ?User                   $user    User
+     * @param BookListInputFiltersDto $filters Filters
      *
-     * @return PaginationInterface<string, mixed> Paginated list
+     * @return PaginationInterface<SlidingPagination> Paginated list
      */
-    public function getPaginatedList(int $page): PaginationInterface
+    public function getPaginatedList(int $page, ?User $user, BookListInputFiltersDto $filters): PaginationInterface
     {
+        $filters = $this->prepareFilters($filters);
+
         return $this->paginator->paginate(
-            $this->bookRepository->queryAll(),
+            $this->bookRepository->queryAll($filters),
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
@@ -82,5 +92,20 @@ class BookService implements BookServiceInterface
     public function delete(Book $book): void
     {
         $this->bookRepository->delete($book);
+    }
+
+    /**
+     * Prepare filters for the books list.
+     *
+     * @param BookListInputFiltersDto $filters Raw filters from request
+     *
+     * @return BookListFiltersDto Result filters
+     *
+     * @throws NonUniqueResultException
+     */
+    private function prepareFilters(BookListInputFiltersDto $filters): BookListFiltersDto
+    {
+        return new BookListFiltersDto(
+            null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null);
     }
 }

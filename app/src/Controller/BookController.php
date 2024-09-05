@@ -5,15 +5,20 @@
 
 namespace App\Controller;
 
+use App\Dto\BookListInputFiltersDto;
 use App\Entity\Book;
+use App\Entity\User;
 use App\Form\Type\BookType;
+use App\Resolver\BookListInputFiltersDtoResolver;
 use App\Service\BookServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -35,14 +40,17 @@ class BookController extends AbstractController
     /**
      * Index action.
      *
-     * @param int $page Page number
+     * @param BookListInputFiltersDto $filters Input filters
+     * @param int                     $page    Page number
      *
      * @return Response HTTP response
      */
     #[Route(name: 'book_index', methods: 'GET')]
-    public function index(#[MapQueryParameter] int $page = 1): Response
+    public function index(#[MapQueryString(resolver: BookListInputFiltersDtoResolver::class)] BookListInputFiltersDto $filters, #[MapQueryParameter] int $page = 1): Response
     {
-        $pagination = $this->bookService->getPaginatedList($page);
+        /** @var User $user */
+        $user = $this->getUser();
+        $pagination = $this->bookService->getPaginatedList($page, $user, $filters);
 
         return $this->render('book/index.html.twig', ['pagination' => $pagination]);
     }
@@ -50,9 +58,12 @@ class BookController extends AbstractController
     /**
      * Show action.
      *
+     * @param Book $book Book entity
+     *
      * @return Response HTTP response
      */
     #[Route('/{id}', name: 'book_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
+    #[IsGranted('VIEW', subject: 'book')]
     public function show(Book $book): Response
     {
         return $this->render('book/show.html.twig', ['book' => $book]);
@@ -65,10 +76,17 @@ class BookController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/create', name: 'book_create', methods: 'GET|POST', )]
+    #[Route('/create', name: 'book_create', methods: 'GET|POST')]
+    #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request): Response
     {
+        // if (!$this->isGranted('ROLE_ADMIN')) {
+        //    throw $this->createAccessDeniedException('No access for you!');
+        // }
+        /** @var User $user */
+        $user = $this->getUser();
         $book = new Book();
+        $book->setCreator($user);
         $form = $this->createForm(
             BookType::class,
             $book,
@@ -87,7 +105,10 @@ class BookController extends AbstractController
             return $this->redirectToRoute('book_index');
         }
 
-        return $this->render('book/create.html.twig', ['form' => $form->createView()]);
+        return $this->render(
+            'book/create.html.twig',
+            ['form' => $form->createView()]
+        );
     }
 
     /**
@@ -99,8 +120,13 @@ class BookController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'book_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    #[IsGranted('EDIT', subject: 'book')]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Book $book): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('No access for you!');
+        }
         $form = $this->createForm(
             BookType::class,
             $book,
@@ -140,8 +166,13 @@ class BookController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'book_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    #[IsGranted('DELETE', subject: 'book')]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Book $book): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('No access for you!');
+        }
         $form = $this->createForm(
             FormType::class,
             $book,

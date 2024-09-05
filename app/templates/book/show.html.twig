@@ -5,6 +5,21 @@
 {% endblock %}
 
 {% block body %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div>{{ app.user.email }}</div>
+        <div>
+            <a href="{{ url('app_logout') }}">{{ 'action_logout'|trans }}</a>
+        </div>
+    {% else %}
+        <div>
+            <a href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>
+        </div>
+    {% endif %}
+    <p>
+        <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
+            {{ 'action.back_to_list'|trans }}
+        </a>
+    </p>
     <h1>{{ 'title.book_details'|trans({'%id%': book.id|default('')}) }}</h1>
     {% if book is defined and book|length %}
         <dl class="dl-horizontal">
@@ -20,12 +35,9 @@
             <dd>{{  book.description }}</dd>
             <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{  book.category.title }}</dd>
+            <dt>{{ 'label.creator'|trans }}</dt>
+            <dd>{{  book.creator.id }}</dd>
         </dl>
-        <p>
-            <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
-                {{ 'action.back_to_list'|trans }}
-            </a>
-        </p>
     {% else %}
         <p>
             {% include 'default/_single_alert_message.html.twig' with {

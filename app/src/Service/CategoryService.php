@@ -35,6 +35,7 @@ class CategoryService implements CategoryServiceInterface
      * Constructor.
      *
      * @param CategoryRepository $categoryRepository Category repository
+     * @param BookRepository     $bookRepository     Book repository
      * @param PaginatorInterface $paginator          Paginator
      */
     public function __construct(private readonly CategoryRepository $categoryRepository, private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator)
@@ -58,9 +59,43 @@ class CategoryService implements CategoryServiceInterface
     }
 
     /**
+     * Get paginated list of books.
+     *
+     * @param Category $category Category entity
+     * @param int|null $page     Page number
+     *
+     * @return PaginationInterface Pagination interface
+     */
+    public function getPaginatedListOfBooks(Category $category, ?int $page = 1): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->bookRepository->findByCategory($category),
+            $page ?? 1,
+            self::PAGINATOR_ITEMS_PER_PAGE
+        );
+    }
+
+    /**
+     * Find by id.
+     *
+     * @param int $id Category id
+     *
+     * @return Category|null Category entity
+     *
+     * @throws NonUniqueResultException
+     */
+    public function findOneById(int $id): ?Category
+    {
+        return $this->categoryRepository->findOneById($id);
+    }
+
+    /**
      * Save entity.
      *
      * @param Category $category Category entity
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save(Category $category): void
     {
@@ -97,7 +132,7 @@ class CategoryService implements CategoryServiceInterface
         try {
             $result = $this->bookRepository->countByCategory($category);
 
-            return !($result > 0);
+            return $result <= 0;
         } catch (NoResultException|NonUniqueResultException) {
             return false;
         }

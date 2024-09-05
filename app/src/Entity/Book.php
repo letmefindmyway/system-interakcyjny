@@ -9,6 +9,7 @@ use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Monolog\DateTimeImmutable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Book.
@@ -89,6 +90,15 @@ class Book
     #[ORM\Column(type: 'string', length: 255)]
     #[Gedmo\Slug(fields: ['title'])]
     private ?string $slug = null;
+
+    /**
+     * Creator.
+     */
+    #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Type(User::class)]
+    private ?User $creator = null;
 
     /**
      * Getter for Id.
@@ -284,6 +294,26 @@ class Book
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return User|null creator
+     */
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param User|null $creator creator
+     *
+     * @return $this
+     */
+    public function setCreator(?User $creator): static
+    {
+        $this->creator = $creator;
 
         return $this;
     }

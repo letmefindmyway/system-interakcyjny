@@ -6,12 +6,24 @@
 
 {% block body %}
     <h1>{{ 'title.category_list'|trans }}</h1>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div>{{ app.user.email }}</div>
+        <div>
+            <a href="{{ url('app_logout') }}">{{ 'action_logout'|trans }}</a>
+        </div>
+    {% else %}
+        <div>
+            <a href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>
+        </div>
+    {% endif %}
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
-            <a  href="{{ url('category_create')}}" title="{{ 'action.create'|trans }} " class="btn btn-primary">
-                {{ 'action.create'|trans }}
-            </a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a  href="{{ url('category_create')}}" title="{{ 'action.create'|trans }} " class="btn btn-primary">
+                    {{ 'action.create'|trans }}
+                </a>
+            {% endif %}
         </div>
 
         <div class="navigation text-center">
@@ -36,15 +48,19 @@
                     <td>{{ category.updatedAt|format_date('long') }}</td>
                     <td>{{ category.title }}</td>
                     <td>
-                        <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action.show'|trans }}">
+                        <a class="btn btn-outline-primary" href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action.show'|trans }}">
                             {{ 'action.show'|trans }}
                         </a>
-                        <a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">
-                            {{ 'action.edit'|trans }}
-                        </a>
-                        <a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">
-                            {{ 'action.delete'|trans }}
-                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="btn btn-outline-success" href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">
+                                {{ 'action.edit'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="btn btn-outline-danger" href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">
+                                {{ 'action.delete'|trans }}
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

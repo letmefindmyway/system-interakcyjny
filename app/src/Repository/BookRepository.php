@@ -5,6 +5,7 @@
 
 namespace App\Repository;
 
+use App\Dto\BookListFiltersDto;
 use App\Entity\Book;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -41,38 +42,21 @@ class BookRepository extends ServiceEntityRepository
     /**
      * Query all records.
      *
+     * @param BookListFiltersDto $filters Filters
+     *
      * @return QueryBuilder Query builder
      */
-    public function queryAll(): QueryBuilder
+    public function queryAll(BookListFiltersDto $filters): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
+        $queryBuilder = $this->getOrCreateQueryBuilder()
             ->select(
                 'partial book.{id, createdAt, updatedAt, title}',
-                'partial category.{id, title}'
+                'partial category.{id, title}',
             )
             ->join('book.category', 'category')
             ->orderBy('book.updatedAt', 'DESC');
-    }
 
-    /**
-     * Count books by category.
-     *
-     * @param Category $category Category
-     *
-     * @return int Number of books in category
-     *
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function countByCategory(Category $category): int
-    {
-        $qb = $this->getOrCreateQueryBuilder();
-
-        return $qb->select($qb->expr()->countDistinct('book.id'))
-            ->where('book.category = :category')
-            ->setParameter(':category', $category)
-            ->getQuery()
-            ->getSingleScalarResult();
+        return $this->applyFiltersToList($queryBuilder, $filters);
     }
 
     /**
@@ -115,5 +99,23 @@ class BookRepository extends ServiceEntityRepository
     private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('book');
+    }
+
+    /**
+     * Apply filters to paginated list.
+     *
+     * @param QueryBuilder       $queryBuilder Query builder
+     * @param BookListFiltersDto $filters      Filters
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, BookListFiltersDto $filters): QueryBuilder
+    {
+        if ($filters->category instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters->category);
+        }
+
+        return $queryBuilder;
     }
 }

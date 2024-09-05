@@ -1,23 +1,20 @@
 <?php
 /**
- * Book type.
+ * Comment type.
  */
 
 namespace App\Form\Type;
 
-use App\Entity\Book;
-use App\Entity\Category;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class BookType.
+ * Class CommentType.
  */
-class BookType extends AbstractType
+class CommentType extends AbstractType
 {
     /**
      * Builds the form.
@@ -33,48 +30,28 @@ class BookType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
-            'title',
+            'email',
             TextType::class,
             [
-                'label' => 'label.title',
+                'label' => 'label.email',
                 'required' => true,
                 'attr' => ['max_length' => 255],
             ]
         );
         $builder->add(
-            'author',
+            'nick',
             TextType::class,
             [
-                'label' => 'label.author',
+                'label' => 'label.nick',
                 'required' => true,
-                'attr' => ['max_length' => 64],
+                'attr' => ['max_length' => 255],
             ]
         );
         $builder->add(
-            'releaseYear',
-            DateType::class,
-            [
-                'widget' => 'single_text',
-                'label' => 'label.releaseYear',
-                'required' => true,
-            ]
-        );
-        $builder->add(
-            'category',
-            EntityType::class,
-            [
-                'class' => Category::class,
-                'choice_label' => fn ($category): string => $category->getTitle(),
-                'label' => 'label.category',
-                'placeholder' => 'label.none',
-                'required' => true,
-            ]
-        );
-        $builder->add(
-            'description',
+            'content',
             TextType::class,
             [
-                'label' => 'label.description',
+                'label' => 'label.content',
                 'required' => true,
                 'attr' => ['max_length' => 255],
             ]
@@ -88,19 +65,14 @@ class BookType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Book::class]);
+        $resolver->setDefaults(['data_class' => Comment::class]);
     }
 
     /**
-     * Returns the prefix of the template block name for this type.
-     *
-     * The block prefix defaults to the underscored short class name with
-     * the "Type" suffix removed (e.g. "UserProfileType" => "user_profile").
-     *
      * @return string The prefix of the template block name
      */
     public function getBlockPrefix(): string
     {
-        return 'book';
+        return 'comment';
     }
 }
