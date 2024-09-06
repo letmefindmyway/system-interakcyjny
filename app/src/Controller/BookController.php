@@ -7,17 +7,21 @@ namespace App\Controller;
 
 use App\Dto\BookListInputFiltersDto;
 use App\Entity\Book;
+use App\Entity\Comment;
 use App\Entity\User;
 use App\Form\Type\BookType;
+use App\Form\Type\CommentType;
+use App\Repository\CommentRepository;
 use App\Resolver\BookListInputFiltersDtoResolver;
 use App\Service\BookServiceInterface;
+use App\Service\CommentService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -30,10 +34,11 @@ class BookController extends AbstractController
     /**
      * Constructor.
      *
-     * @param BookServiceInterface $bookService Book service
-     * @param TranslatorInterface  $translator  Translator
+     * @param BookServiceInterface $bookService    Book service
+     * @param TranslatorInterface  $translator     Translator
+     * @param CommentService       $commentService Comment service
      */
-    public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator)
+    public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator, private readonly CommentService $commentService)
     {
     }
 
@@ -58,15 +63,19 @@ class BookController extends AbstractController
     /**
      * Show action.
      *
-     * @param Book $book Book entity
+     * @param Book    $book    Book entity
+     * @param Comment $comment Comment
+     * @param int     $page    Page number
      *
      * @return Response HTTP response
      */
     #[Route('/{id}', name: 'book_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
     #[IsGranted('VIEW', subject: 'book')]
-    public function show(Book $book): Response
+    public function show(Book $book, Comment $comment, #[MapQueryParameter] int $page = 1): Response
     {
-        return $this->render('book/show.html.twig', ['book' => $book]);
+        $comment = $this->commentService->getPaginatedList($book, $page);
+
+        return $this->render('book/show.html.twig', ['book' => $book, 'comments' => $comment]);
     }
 
     /**
@@ -80,9 +89,6 @@ class BookController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request): Response
     {
-        // if (!$this->isGranted('ROLE_ADMIN')) {
-        //    throw $this->createAccessDeniedException('No access for you!');
-        // }
         /** @var User $user */
         $user = $this->getUser();
         $book = new Book();

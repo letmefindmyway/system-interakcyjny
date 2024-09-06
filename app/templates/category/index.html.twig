@@ -6,28 +6,13 @@
 
 {% block body %}
     <h1>{{ 'title.category_list'|trans }}</h1>
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <div>{{ app.user.email }}</div>
-        <div>
-            <a href="{{ url('app_logout') }}">{{ 'action_logout'|trans }}</a>
-        </div>
-    {% else %}
-        <div>
-            <a href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>
-        </div>
-    {% endif %}
     {% if pagination is defined and pagination.items|length %}
-
-        <div class="navigation text-center">
+        <div class="d-flex flex-row-reverse justify-content-between mt-5">
             {% if is_granted('ROLE_ADMIN') %}
                 <a  href="{{ url('category_create')}}" title="{{ 'action.create'|trans }} " class="btn btn-primary">
                     {{ 'action.create'|trans }}
                 </a>
             {% endif %}
-        </div>
-
-        <div class="navigation text-center">
-            {{ knp_pagination_render(pagination) }}
         </div>
 
         <table class="table table-striped">

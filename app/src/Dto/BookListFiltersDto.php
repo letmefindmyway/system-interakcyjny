@@ -15,7 +15,7 @@ class BookListFiltersDto
     /**
      * Constructor.
      *
-     * @param Category|null $category   Category entity
+     * @param Category|null $category Category entity
      */
     public function __construct(public readonly ?Category $category)
     {

@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
 #[UniqueEntity('email')]
+#[UniqueEntity('nickname')]
 #[ORM\UniqueConstraint(name: 'email_idx', columns: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -37,6 +38,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     #[Assert\Email]
     private ?string $email = null;
+
+    #[ORM\Column(type: 'string', length: 40, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
+    #[Assert\Regex(pattern: '/^[a-zA-Z0-9.]+$/', message: 'message.field_alphanumeric')]
+    #[Assert\Length(min: 3, max: 40)]
+    private ?string $nickname = null;
 
     /**
      * Roles.
@@ -103,6 +111,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUsername(): string
     {
         return (string) $this->email;
+    }
+
+    /**
+     * Getter for nickname.
+     *
+     * @return string|null Email
+     */
+    public function getNickname(): ?string
+    {
+        return $this->nickname;
+    }
+
+    /**
+     * Setter for nickname.
+     *
+     * @param string $nickname Nickname
+     */
+    public function setNickname(string $nickname): void
+    {
+        $this->nickname = $nickname;
     }
 
     /**

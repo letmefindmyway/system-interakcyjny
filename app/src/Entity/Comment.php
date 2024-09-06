@@ -9,7 +9,7 @@ use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Book.
+ * Class Comment.
  *
  * @psalm-suppress MissingConstructor
  */
@@ -28,14 +28,14 @@ class Comment
     /**
      * email.
      */
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180)]
     private ?string $email = null;
 
     /**
-     * nick.
+     * Nickname.
      */
     #[ORM\Column(length: 255)]
-    private ?string $nick = null;
+    private ?string $nickname = null;
 
     /**
      * content.
@@ -84,25 +84,25 @@ class Comment
     }
 
     /**
-     * Getter for Nick.
+     * Getter for Nickname.
      *
      * @return string|null string
      */
-    public function getNick(): ?string
+    public function getNickname(): ?string
     {
-        return $this->nick;
+        return $this->nickname;
     }
 
     /**
-     * Setter for Nick.
+     * Setter for Nickname.
      *
-     * @param string $nick nick
+     * @param string $nickname Nickname
      *
      * @return $this
      */
-    public function setNick(string $nick): static
+    public function setNickname(string $nickname): static
     {
-        $this->nick = $nick;
+        $this->nickname = $nickname;
 
         return $this;
     }

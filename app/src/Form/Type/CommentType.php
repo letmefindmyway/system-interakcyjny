@@ -35,14 +35,14 @@ class CommentType extends AbstractType
             [
                 'label' => 'label.email',
                 'required' => true,
-                'attr' => ['max_length' => 255],
+                'attr' => ['max_length' => 180],
             ]
         );
         $builder->add(
-            'nick',
+            'nickname',
             TextType::class,
             [
-                'label' => 'label.nick',
+                'label' => 'label.nickname',
                 'required' => true,
                 'attr' => ['max_length' => 255],
             ]

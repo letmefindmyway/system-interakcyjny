@@ -105,7 +105,6 @@ class BookService implements BookServiceInterface
      */
     private function prepareFilters(BookListInputFiltersDto $filters): BookListFiltersDto
     {
-        return new BookListFiltersDto(
-            null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null);
+        return new BookListFiltersDto(null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null);
     }
 }
