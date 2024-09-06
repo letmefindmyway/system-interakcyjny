@@ -35,17 +35,17 @@ class CommentController extends AbstractController
     /**
      * Index action.
      *
-     * @param int $page page
+     //* @param int $page page
      *
-     * @return Response HTTP response
+     //* @return Response HTTP response
      */
-    #[Route(name: 'comment_index', methods: 'GET')]
-    public function index(#[MapQueryParameter] int $page = 1): Response
-    {
-        $pagination = $this->commentService->getPaginatedList($page);
+    //#[Route(name: 'comment_index', methods: 'GET')]
+    //public function index(#[MapQueryParameter] int $page = 1): Response
+    //{
+    //    $pagination = $this->commentService->getPaginatedList($page);
 
-        return $this->render('book/index.html.twig', ['pagination' => $pagination]);
-    }
+    //    return $this->render('book/index.html.twig', ['pagination' => $pagination]);
+    //}
 
     /**
      * Show action.

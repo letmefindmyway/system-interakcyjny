@@ -5,6 +5,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Book;
 use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
@@ -23,6 +24,22 @@ class CommentRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Comment::class);
+    }
+
+    /**
+     * Find all comments to book.
+     *
+     * @param Book $book Book entity
+     *
+     * @return array Comments
+     */
+    public function findByBook(Book $book): array
+    {
+        return $this->getOrCreateQueryBuilder()
+            ->andWhere('comment.book = :book')
+            ->setParameter('book', $book)
+            ->getQuery()
+            ->getResult();
     }
 
     /**

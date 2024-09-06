@@ -30,7 +30,7 @@ class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             return;
         }
 
-        $this->createMany(200, 'comments', function ($i) {
+        $this->createMany(1000, 'comments', function ($i) {
             $comment = new Comment();
             $comment->setEmail(sprintf('user%d@example.com', $i));
             $comment->setNickname($this->faker->unique()->userName);

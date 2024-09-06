@@ -49,7 +49,7 @@ class CommentService implements CommentServiceInterface
     public function getPaginatedList(Book $book, int $page = 1): PaginationInterface
     {
         return $this->paginator->paginate(
-            $this->commentRepository->findBy(['book' => $book]),
+            $this->commentRepository->findByBook($book),
             $page ?? 1,
             self::PAGINATOR_ITEMS_PER_PAGE
         );

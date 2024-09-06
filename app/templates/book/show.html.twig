@@ -29,15 +29,23 @@
                 {{ 'action.back_to_list'|trans }}
             </a>
         </p>
-        <h2>{{ 'title.comments'|trans }}</h2>
-        {% for comment in comments %}
-            <div>
-                <strong>{{ comment.nick }}</strong>
+        {% if comments is defined and comments.items|length %}
+            {% for comment in comments.items %}
+                <div class="border rounded p-3 mb-2">
+                    <span class="fw-bold">{{ comment.nickname }}</span>
+                    <div>{{ comment.content }}</div>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ url('comment_delete', {id: comment.id}) }}" class="btn btn-outline-danger">{{ 'action.delete'|trans }}</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <div class="navigation text-center">
+                {{ knp_pagination_render(comments) }}
             </div>
-            <div>{{ comment.content }}</div>
         {% else %}
             {{ 'message.no_comments'|trans }}
-        {% endfor %}
+        {% endif %}
     {% else %}
         <p>
             {% include 'default/_single_alert_message.html.twig' with {

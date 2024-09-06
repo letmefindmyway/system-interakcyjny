@@ -63,15 +63,14 @@ class BookController extends AbstractController
     /**
      * Show action.
      *
-     * @param Book    $book    Book entity
-     * @param Comment $comment Comment
-     * @param int     $page    Page number
+     * @param Book $book Book entity
+     * @param int  $page Page number
      *
      * @return Response HTTP response
      */
     #[Route('/{id}', name: 'book_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
     #[IsGranted('VIEW', subject: 'book')]
-    public function show(Book $book, Comment $comment, #[MapQueryParameter] int $page = 1): Response
+    public function show(Book $book, #[MapQueryParameter] int $page = 1): Response
     {
         $comment = $this->commentService->getPaginatedList($book, $page);
 
