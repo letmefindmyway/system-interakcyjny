@@ -38,6 +38,7 @@ class CommentRepository extends ServiceEntityRepository
         return $this->getOrCreateQueryBuilder()
             ->andWhere('comment.book = :book')
             ->setParameter('book', $book)
+            ->orderBy('comment.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

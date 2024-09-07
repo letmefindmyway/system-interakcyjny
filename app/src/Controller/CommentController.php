@@ -5,13 +5,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
 use App\Entity\Comment;
 use App\Form\Type\CommentType;
+use App\Repository\CommentRepository;
 use App\Service\CommentServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -31,21 +32,6 @@ class CommentController extends AbstractController
     public function __construct(private readonly CommentServiceInterface $commentService, private readonly TranslatorInterface $translator)
     {
     }
-
-    /**
-     * Index action.
-     *
-     //* @param int $page page
-     *
-     //* @return Response HTTP response
-     */
-    //#[Route(name: 'comment_index', methods: 'GET')]
-    //public function index(#[MapQueryParameter] int $page = 1): Response
-    //{
-    //    $pagination = $this->commentService->getPaginatedList($page);
-
-    //    return $this->render('book/index.html.twig', ['pagination' => $pagination]);
-    //}
 
     /**
      * Show action.

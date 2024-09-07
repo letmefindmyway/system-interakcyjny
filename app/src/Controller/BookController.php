@@ -15,6 +15,7 @@ use App\Repository\CommentRepository;
 use App\Resolver\BookListInputFiltersDtoResolver;
 use App\Service\BookServiceInterface;
 use App\Service\CommentService;
+use Doctrine\ORM\Exception\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,11 +35,12 @@ class BookController extends AbstractController
     /**
      * Constructor.
      *
-     * @param BookServiceInterface $bookService    Book service
-     * @param TranslatorInterface  $translator     Translator
-     * @param CommentService       $commentService Comment service
+     * @param BookServiceInterface $bookService       Book service
+     * @param TranslatorInterface  $translator        Translator
+     * @param CommentService       $commentService    Comment service
+     * @param CommentRepository    $commentRepository Comment repository
      */
-    public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator, private readonly CommentService $commentService)
+    public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator, private readonly CommentService $commentService, private readonly CommentRepository $commentRepository)
     {
     }
 
@@ -206,5 +208,42 @@ class BookController extends AbstractController
                 'book' => $book,
             ]
         );
+    }
+
+    /**
+     * Add comment action.
+     *
+     * @param Request $request Request
+     * @param Book    $book    Book
+     *
+     * @return Response HTTP response
+     *
+     * @throws ORMException
+     */
+    #[Route('/book/{id}/comment', name: 'comment_add', requirements: ['id' => '\d+'], methods: ['GET|POST'])]
+    public function comment(Request $request, Book $book): Response
+    {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setBook($book);
+
+            $this->commentService->save($comment);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
+            return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
+        }
+
+        return $this->render('book/show.html.twig', [
+            'book' => $book,
+            'comment_form' => $form->createView(),
+            'comments' => $this->commentService->getPaginatedList($book),
+        ]);
     }
 }

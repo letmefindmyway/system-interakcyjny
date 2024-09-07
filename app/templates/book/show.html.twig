@@ -14,6 +14,10 @@
             <dd>{{ book.createdAt|format_date('long') }}</dd>
             <dt>{{ 'label.updated_at'|trans }}</dt>
             <dd>{{ book.updatedAt|format_date('long') }}</dd>
+            <dt>{{ 'label.releaseYear'|trans }}</dt>
+            <dd>{{ book.releaseYear|format_date('long') }}</dd>
+            <dt>{{ 'label.author'|trans }}</dt>
+            <dd>{{  book.author }}</dd>
             <dt>{{ 'label.title'|trans }}</dt>
             <dd>{{  book.title }}</dd>
             <dt>{{ 'label.description'|trans }}</dt>
@@ -28,11 +32,22 @@
             <a class="btn btn-outline-primary" href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
                 {{ 'action.back_to_list'|trans }}
             </a>
+            <a class="btn btn-outline-primary" href="{{ url('comment_add', {id: book.id}) }}" class="btn btn-primary">
+                {{ 'action.comment'|trans }}
+            </a>
         </p>
-        {% if comments is defined and comments.items|length %}
+        {% if comment_form is defined and comment_form is not null %}
+            {{ 'title.comment_add'|trans }}
+            {{ form_start(comment_form, {'action': path('comment_add', {'id': book.id})}) }}
+            {{ form_widget(comment_form) }}
+            <button class="btn btn-outline-success">{{ 'action.comment'|trans }}</button>
+            {{ form_end(comment_form) }}
+        {% endif %}
+
+        {% if comments is defined and comments %}
             {% for comment in comments.items %}
-                <div class="border rounded p-3 mb-2">
-                    <span class="fw-bold">{{ comment.nickname }}</span>
+                <div class="border square p-3 mb-2">
+                    <span class="fw-bold">{{ comment.nickname }}</span> &bull; <span>{{ comment.createdAt|format_date('long') }}</span>
                     <div>{{ comment.content }}</div>
                     {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ url('comment_delete', {id: comment.id}) }}" class="btn btn-outline-danger">{{ 'action.delete'|trans }}</a>

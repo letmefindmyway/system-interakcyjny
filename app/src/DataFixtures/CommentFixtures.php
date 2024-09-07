@@ -32,9 +32,12 @@ class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureIn
 
         $this->createMany(1000, 'comments', function ($i) {
             $comment = new Comment();
+            $comment->setCreatedAt(
+                \DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-100 days', '-1 days'))
+            );
             $comment->setEmail(sprintf('user%d@example.com', $i));
             $comment->setNickname($this->faker->unique()->userName);
-            $comment->setContent($this->faker->realTextBetween(2, 255));
+            $comment->setContent($this->faker->sentences(2, true));
             /** @var Book $book */
             $book = $this->getRandomReference('books');
             $comment->setBook($book);
