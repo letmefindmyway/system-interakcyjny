@@ -59,16 +59,26 @@ class CommentController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/{id}/delete', name: 'comment_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    #[Route('/comment/{id}/delete', name: 'comment_delete', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'DELETE'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Comment $comment): Response
     {
         $book = $comment->getBook();
 
-        if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
+        // If the request is GET, render the form
+        if ($request->isMethod('GET')) {
+            $form = $this->createForm(CommentType::class, $comment, [
+                'method' => 'DELETE',
+                'action' => $this->generateUrl('comment_delete', ['id' => $comment->getId()]),
+            ]);
+
+            return $this->render('comment/delete.html.twig', [
+                'form' => $form->createView(),
+                'book' => $book,
+            ]);
         }
 
+        // If the request is DELETE, handle the form submission
         $form = $this->createForm(CommentType::class, $comment, [
             'method' => 'DELETE',
             'action' => $this->generateUrl('comment_delete', ['id' => $comment->getId()]),
@@ -83,9 +93,10 @@ class CommentController extends AbstractController
             return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
         }
 
-        return $this->render('book/delete.html.twig', [
+        // In case of invalid form (though rare in DELETE), re-render the form
+        return $this->render('comment/delete.html.twig', [
             'form' => $form->createView(),
             'book' => $book,
-            'comments' => $this->commentService->getPaginatedList($book), ]);
+        ]);
     }
 }

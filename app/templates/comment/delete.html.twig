@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}'
+{% block title %}{{ 'title.comment_delete'|trans }}{% endblock %}
+    <h1>{{ 'title.comment_delete'|trans({'%id%': comment.id|default('')}) }}</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group row float-sm-right">
+        <input type="submit" value="{{ 'action.delete'|trans }}" class="btn btn-dark"/>
+    </div>
+    <div class="form-group row float-sm-left">
+        <a href="{{ path('book_show', { 'id': book.id }) }}" class="btn btn-outline-secondary">
+            {{ 'action.back_to_list'|trans }}
+        </a>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
