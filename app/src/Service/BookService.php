@@ -38,9 +38,10 @@ class BookService implements BookServiceInterface
      *
      * @param BookRepository           $bookRepository  Book repository
      * @param CategoryServiceInterface $categoryService Category service
+     * @param CommentService           $commentService  Comment service
      * @param PaginatorInterface       $paginator       Paginator
      */
-    public function __construct(private readonly BookRepository $bookRepository, private readonly CategoryServiceInterface $categoryService, private readonly PaginatorInterface $paginator)
+    public function __construct(private readonly BookRepository $bookRepository, private readonly CategoryServiceInterface $categoryService, private readonly CommentService $commentService, private readonly PaginatorInterface $paginator)
     {
     }
 
@@ -91,6 +92,7 @@ class BookService implements BookServiceInterface
      */
     public function delete(Book $book): void
     {
+        $this->commentService->deleteByBook($book);
         $this->bookRepository->delete($book);
     }
 
