@@ -32,9 +32,17 @@
 
         {% if is_granted('ROLE_ADMIN') %}
             <div>
-                <a href="{{ url('nickname_edit', {id: user.id}) }}">{{ 'action.edit_nickname'|trans }}</a>
-                <a href="{{ url('email_edit', {id: user.id}) }}">{{ 'action.edit_email'|trans }}</a>
-                <a href="{{ url('password_edit', {id: user.id}) }}">{{ 'action.edit_password'|trans }}</a>
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="{{ url('nickname_edit', {id: user.id}) }}" class="btn btn-outline-primary">{{ 'action.edit_nickname'|trans }}</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="{{ url('email_edit', {id: user.id}) }}" class="btn btn-outline-primary">{{ 'action.edit_email'|trans }}</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="{{ url('password_edit', {id: user.id}) }}" class="btn btn-outline-primary">{{ 'action.edit_password'|trans }}</a>
+                    </li>
+                </ul>
             </div>
         {% endif %}
     {% endif %}

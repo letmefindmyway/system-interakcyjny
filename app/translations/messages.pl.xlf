@@ -66,10 +66,6 @@
         <source>label.content</source>
         <target>Tresc</target>
       </trans-unit>
-      <trans-unit id="label.tags">
-        <source>label.tags</source>
-        <target>Tags</target>
-      </trans-unit>
       <trans-unit id="message.empty_list">
         <source>message.empty_list</source>
         <target>Lista jest pusta.</target>
@@ -141,6 +137,10 @@
       <trans-unit id="message.deleted_successfully">
         <source>message.deleted_successfully</source>
         <target>Usunieto pomyslnie</target>
+      </trans-unit>
+      <trans-unit id="message.category_contains_tasks">
+        <source>message.category_contains_tasks</source>
+        <target>Category contains books</target>
       </trans-unit>
       <trans-unit id="message.form_error">
         <source>message.form_error</source>

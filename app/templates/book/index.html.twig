@@ -7,7 +7,7 @@
 {% block body %}
     <h1>{{ 'title.book_list'|trans }}</h1>
     {% if pagination is defined and pagination.items|length %}
-        <div class="d-flex flex-row-reverse justify-content-between mt-5">
+        <div class="d-flex flex-row-reverse justify-content-center mt-5">
             {% if is_granted('ROLE_ADMIN') %}
                 <a  href="{{ url('book_create')}}" title="{{ 'action.create'|trans }} " class="btn btn-primary">
                     {{ 'action.create'|trans }}
@@ -21,6 +21,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'book.id') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'book.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.updated_at'|trans, 'book.updatedAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'book.author') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title') }}</th>
                 <th>{{ 'label.added_by'|trans }}</th>
@@ -33,6 +34,7 @@
                     <td>{{ book.id }}</td>
                     <td>{{ book.createdAt|format_date('long') }}</td>
                     <td>{{ book.updatedAt|format_date('long') }}</td>
+                    <td>{{ book.author }}</td>
                     <td>{{ book.title }}</td>
                     <td>
                         <a class="btn btn-outline-primary"

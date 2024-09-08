@@ -17,11 +17,19 @@
             <dt>{{ 'label.title'|trans }}</dt>
             <dd>{{  category.title }}</dd>
         </dl>
-        <div class="d-flex flex-column">
-            <a href="{{ url('book_index', {categoryId: category.id}) }}" class="btn btn-outline-secondary">{{ 'action.category_book_list'|trans }}</a>
-            <a class="btn btn-outline-primary" href="{{ url('category_index') }}" title="{{ 'action.back_to_list'|trans }}">
-                {{ 'action.back_to_list'|trans }}
-            </a>
+        <div class="d-flex flex-column align-items-start">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a href="{{ url('category_index') }}" class="btn btn-outline-secondary" title="{{ 'action.back_to_list'|trans }}">
+                        {{ 'action.back_to_list'|trans }}
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="{{ url('book_index', {categoryId: category.id}) }}" class="btn btn-outline-primary">
+                        {{ 'action.category_book_list'|trans }}
+                    </a>
+                </li>
+            </ul>
         </div>
     {% else %}
         <p>

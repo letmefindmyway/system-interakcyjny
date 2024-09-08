@@ -1,6 +1,6 @@
 {% block nav %}
     <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <a class="navbar-brand">{{ 'label.catalogue'|trans }}</a>
+        <strong><a class="navbar-brand">{{ 'label.catalogue'|trans }}</a></strong>
         <ul class="navbar-nav d-flex flex-row col-gap10">
             <li class="nav-item"><a href="{{ url('book_index') }}" class="nav-link">{{ 'label.books'|trans }}</a></li>
             <li class="nav-item"><a href="{{ url('category_index') }}" class="nav-link">{{ 'label.categories'|trans }}</a></li>
