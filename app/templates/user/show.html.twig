@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'label.manage_account'|trans }}
+{% endblock %}
+
+{% block body %}
+    {% if user is defined and user is not null %}
+
+        <div class="text-muted h5">
+            {{ 'title.user_view'|trans({'%id%' : user.id | default('')}) }}
+        </div>
+
+        <h1>
+            {% if is_granted('ROLE_ADMIN') %}
+                {% if app.user.id == user.id %}
+                    {{ 'label.account'|trans }}
+                {% else %}
+                    {{ 'label.manage_account %username%'|trans({'%username%': user.nickname|default('')}) }}
+                {% endif %}
+            {% else %}
+                {{ 'label.account %username%'|trans({'%username%': user.nickname|default('')}) }}
+            {% endif %}
+        </h1>
+
+        <dl class="dl-horizontal mt-4">
+            <dt>{{ 'label.nickname'|trans }}</dt>
+            <dd>{{ user.nickname }}</dd>
+            <dt>{{ 'label.email'|trans }}</dt>
+            <dd>{{ user.email }}</dd>
+        </dl>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <div>
+                <a href="{{ url('nickname_edit', {id: user.id}) }}">{{ 'action.edit_nickname'|trans }}</a>
+                <a href="{{ url('email_edit', {id: user.id}) }}">{{ 'action.edit_email'|trans }}</a>
+                <a href="{{ url('password_edit', {id: user.id}) }}">{{ 'action.edit_password'|trans }}</a>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

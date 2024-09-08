@@ -7,7 +7,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Entity\Comment;
-use App\Form\Type\CommentType;
+use App\Form\Type\User\CommentType;
 use App\Repository\CommentRepository;
 use App\Service\CommentServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
