@@ -246,6 +246,26 @@
         <source>title.category_view</source>
         <target>kategoria #%id%</target>
       </trans-unit>
+      <trans-unit id="message.field_alphanumeric">
+        <source>message.field_alphanumeric</source>
+        <target>Pole alfanumeryczne</target>
+      </trans-unit>
+      <trans-unit id="message.error_password">
+        <source>message.error_password</source>
+        <target>Blad hasla</target>
+      </trans-unit>
+      <trans-unit id="label.manage_account %username%">
+        <source>label.manage_account %username%</source>
+        <target>Zarzadzaj kontem %username%</target>
+      </trans-unit>
+      <trans-unit id="label.account %username%">
+        <source>label.account %username%</source>
+        <target>Konto %username%</target>
+      </trans-unit>
+      <trans-unit id="message.no_comments">
+        <source>message.no_comments</source>
+        <target>Brak komentarzy</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

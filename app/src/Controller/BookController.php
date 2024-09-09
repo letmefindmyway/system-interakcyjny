@@ -11,7 +11,6 @@ use App\Entity\Comment;
 use App\Entity\User;
 use App\Form\Type\BookType;
 use App\Form\Type\CommentType;
-use App\Repository\CommentRepository;
 use App\Resolver\BookListInputFiltersDtoResolver;
 use App\Service\BookServiceInterface;
 use App\Service\CommentService;
@@ -35,12 +34,11 @@ class BookController extends AbstractController
     /**
      * Constructor.
      *
-     * @param BookServiceInterface $bookService       Book service
-     * @param TranslatorInterface  $translator        Translator
-     * @param CommentService       $commentService    Comment service
-     * @param CommentRepository    $commentRepository Comment repository
+     * @param BookServiceInterface $bookService    Book service
+     * @param TranslatorInterface  $translator     Translator
+     * @param CommentService       $commentService Comment service
      */
-    public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator, private readonly CommentService $commentService, private readonly CommentRepository $commentRepository)
+    public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator, private readonly CommentService $commentService)
     {
     }
 
