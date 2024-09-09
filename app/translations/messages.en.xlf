@@ -146,6 +146,94 @@
         <source>message.form_error</source>
         <target>Form error</target>
       </trans-unit>
+      <trans-unit id="label.catalogue">
+        <source>label.catalogue</source>
+        <target>Catalogue</target>
+      </trans-unit>
+      <trans-unit id="label.books">
+        <source>label.books</source>
+        <target>Books</target>
+      </trans-unit>
+      <trans-unit id="label.categories">
+        <source>label.categories</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="label.account">
+        <source>label.account</source>
+        <target>Account</target>
+      </trans-unit>
+      <trans-unit id="action.login">
+        <source>action.login</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="action.logout">
+        <source>action.logout</source>
+        <target>Logout</target>
+      </trans-unit>
+      <trans-unit id="action.comment">
+        <source>action.comment</source>
+        <target>Comment</target>
+      </trans-unit>
+      <trans-unit id="label.creator_nickname">
+        <source>label.creator_nickname</source>
+        <target>Who added</target>
+      </trans-unit>
+      <trans-unit id="action.category_book_list">
+        <source>action.category_book_list</source>
+        <target>Books from this category</target>
+      </trans-unit>
+      <trans-unit id="label.manage_account">
+        <source>label.manage_account</source>
+        <target>Manage account</target>
+      </trans-unit>
+      <trans-unit id="title.user_view">
+        <source>title.user_view</source>
+        <target>User view %id%</target>
+      </trans-unit>
+      <trans-unit id="label.nickname">
+        <source>label.nickname</source>
+        <target>Nickname</target>
+      </trans-unit>
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="action.edit_nickname">
+        <source>action.edit_nickname</source>
+        <target>Edit nickname</target>
+      </trans-unit>
+      <trans-unit id="label.edit_nickname">
+        <source>label.edit_nickname</source>
+        <target>Edit nickname</target>
+      </trans-unit>
+      <trans-unit id="action.edit_email">
+        <source>action.edit_email</source>
+        <target>Edit email</target>
+      </trans-unit>
+      <trans-unit id="label.edit_email">
+        <source>label.edit_email</source>
+        <target>Edit email</target>
+      </trans-unit>
+      <trans-unit id="action.edit_password">
+        <source>action.edit_password</source>
+        <target>Edit password</target>
+      </trans-unit>
+      <trans-unit id="label.edit_password">
+        <source>label.edit_password</source>
+        <target>Edit password</target>
+      </trans-unit>
+      <trans-unit id="label.new_password">
+        <source>label.new_password</source>
+        <target>New password</target>
+      </trans-unit>
+      <trans-unit id="label.repeat_password">
+        <source>label.repeat_password</source>
+        <target>Repeat password</target>
+      </trans-unit>
+      <trans-unit id="message.invalid_password">
+        <source>message.invalid_password</source>
+        <target>Invalid password</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

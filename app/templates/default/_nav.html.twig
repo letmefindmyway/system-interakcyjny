@@ -1,17 +1,17 @@
 {% block nav %}
     <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
         <strong><a class="navbar-brand">{{ 'label.catalogue'|trans }}</a></strong>
-        <ul class="navbar-nav d-flex flex-row col-gap10">
-            <li class="nav-item"><a href="{{ url('book_index') }}" class="nav-link">{{ 'label.books'|trans }}</a></li>
-            <li class="nav-item"><a href="{{ url('category_index') }}" class="nav-link">{{ 'label.categories'|trans }}</a></li>
+        <ul class="list-inline, navbar-nav d-flex flex-row col-gap10">
+            <li class="list-inline-item nav-item"><a href="{{ url('book_index') }}" class="list-inline-item nav-link">{{ 'label.books'|trans }}</a></li>
+            <li class="list-inline-item nav-item"><a href="{{ url('category_index') }}" class="list-inline-item nav-link">{{ 'label.categories'|trans }}</a></li>
 
             {% if is_granted('ROLE_ADMIN') %}
-                <li class="nav-item"><a href="{{ url('user_show', {id: app.user.id}) }}" class="nav-link">{{ 'label.account'|trans }}</a></li>
+                <li class="list-inline-item nav-item"><a href="{{ url('user_show', {id: app.user.id}) }}" class="list-inline-item nav-link">{{ 'label.account'|trans }}</a></li>
             {% endif %}
             {% if is_granted('IS_AUTHENTICATED') %}
-                <li class="nav-item"><a href="{{ url('app_logout') }}" class="nav-link">{{ 'action.logout'|trans }}</a></li>
+                <li class="list-inline-item nav-item"><a href="{{ url('app_logout') }}" class="list-inline-item nav-link">{{ 'action.logout'|trans }}</a></li>
             {% else %}
-                <li class="nav-item"><a href="{{ url('app_login') }}" class="nav-link">{{ 'action.login'|trans }}</a></li>
+                <li class="list-inline-item nav-item"><a href="{{ url('app_login') }}" class="list-inline-item nav-link">{{ 'action.login'|trans }}</a></li>
             {% endif %}
         </ul>
     </nav>

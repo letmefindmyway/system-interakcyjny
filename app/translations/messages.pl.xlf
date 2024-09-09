@@ -140,11 +140,99 @@
       </trans-unit>
       <trans-unit id="message.category_contains_tasks">
         <source>message.category_contains_tasks</source>
-        <target>Category contains books</target>
+        <target>Kategoria zawiera ksiazki</target>
       </trans-unit>
       <trans-unit id="message.form_error">
         <source>message.form_error</source>
         <target>Blad formularza</target>
+      </trans-unit>
+      <trans-unit id="label.catalogue">
+        <source>label.catalogue</source>
+        <target>Katalog</target>
+      </trans-unit>
+      <trans-unit id="label.books">
+        <source>label.books</source>
+        <target>Ksiazki</target>
+      </trans-unit>
+      <trans-unit id="label.categories">
+        <source>label.categories</source>
+        <target>Kategorie</target>
+      </trans-unit>
+      <trans-unit id="label.account">
+        <source>label.account</source>
+        <target>Konto</target>
+      </trans-unit>
+      <trans-unit id="action.login">
+        <source>action.login</source>
+        <target>Zaloguj sie</target>
+      </trans-unit>
+      <trans-unit id="action.logout">
+        <source>action.logout</source>
+        <target>Wyloguj sie</target>
+      </trans-unit>
+      <trans-unit id="action.comment">
+        <source>action.comment</source>
+        <target>Dodaj komentarz</target>
+      </trans-unit>
+      <trans-unit id="label.creator_nickname">
+        <source>label.creator_nickname</source>
+        <target>Kto dodal</target>
+      </trans-unit>
+      <trans-unit id="action.category_book_list">
+        <source>action.category_book_list</source>
+        <target>Ksiazki z tej kategorii</target>
+      </trans-unit>
+      <trans-unit id="label.manage_account">
+        <source>label.manage_account</source>
+        <target>Zarzadzaj kontem</target>
+      </trans-unit>
+      <trans-unit id="title.user_view">
+        <source>title.user_view</source>
+        <target>Uzytkownik #%id%</target>
+      </trans-unit>
+      <trans-unit id="label.nickname">
+        <source>label.nickname</source>
+        <target>Nickname</target>
+      </trans-unit>
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="action.edit_nickname">
+        <source>action.edit_nickname</source>
+        <target>Edytuj nickname</target>
+      </trans-unit>
+      <trans-unit id="label.edit_nickname">
+        <source>label.edit_nickname</source>
+        <target>Edytuj nickname</target>
+      </trans-unit>
+      <trans-unit id="action.edit_email">
+        <source>action.edit_email</source>
+        <target>Edytuj email</target>
+      </trans-unit>
+      <trans-unit id="label.edit_email">
+        <source>label.edit_email</source>
+        <target>Edytuj email</target>
+      </trans-unit>
+      <trans-unit id="action.edit_password">
+        <source>action.edit_password</source>
+        <target>Edytuj haslo</target>
+      </trans-unit>
+      <trans-unit id="label.edit_password">
+        <source>label.edit_password</source>
+        <target>Edytuj haslo</target>
+      </trans-unit>
+      <trans-unit id="label.new_password">
+        <source>label.new_password</source>
+        <target>Nowe haslo</target>
+      </trans-unit>
+      <trans-unit id="label.repeat_password">
+        <source>label.repeat_password</source>
+        <target>Powtorz haslo</target>
+      </trans-unit>
+      <trans-unit id="message.invalid_password">
+        <source>message.invalid_password</source>
+        <target>Niepoprawne haslo</target>
       </trans-unit>
     </body>
   </file>

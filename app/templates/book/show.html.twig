@@ -20,8 +20,8 @@
             <dd>{{  book.description }}</dd>
             <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{  book.category.title }}</dd>
-            <dt>{{ 'label.creator'|trans }}</dt>
-            <dd>{{  book.creator.id }}</dd>
+            <dt>{{ 'label.creator_nickname'|trans }}</dt>
+            <dd>{{  book.creator.nickname }} &bull; id #{{  book.creator.id }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
             <dd>{{ book.createdAt|format_date('long') }}</dd>
             <dt>{{ 'label.updated_at'|trans }}</dt>
