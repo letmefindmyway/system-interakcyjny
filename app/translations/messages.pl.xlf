@@ -148,7 +148,7 @@
       </trans-unit>
       <trans-unit id="label.catalogue">
         <source>label.catalogue</source>
-        <target>Katalog</target>
+        <target>Katalog ksiazek</target>
       </trans-unit>
       <trans-unit id="label.books">
         <source>label.books</source>
@@ -233,6 +233,10 @@
       <trans-unit id="message.invalid_password">
         <source>message.invalid_password</source>
         <target>Niepoprawne haslo</target>
+      </trans-unit>
+      <trans-unit id="title.comment_delete">
+        <source>title.comment_delete</source>
+        <target>Usun komentarz</target>
       </trans-unit>
     </body>
   </file>

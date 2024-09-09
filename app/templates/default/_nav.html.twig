@@ -1,10 +1,11 @@
 {% block nav %}
-    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <nav class="navbar navbar-light border rounded p-3 m-1 mb-2" style="background-color: #e3f2fd;">
         <strong><a class="navbar-brand">{{ 'label.catalogue'|trans }}</a></strong>
-        <ul class="list-inline, navbar-nav d-flex flex-row col-gap10">
+        <ul class="list-inline, navbar-nav d-flex flex-row">
             <li class="list-inline-item nav-item"><a href="{{ url('book_index') }}" class="list-inline-item nav-link">{{ 'label.books'|trans }}</a></li>
             <li class="list-inline-item nav-item"><a href="{{ url('category_index') }}" class="list-inline-item nav-link">{{ 'label.categories'|trans }}</a></li>
 
+            <div class="vr m-2"></div>
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="list-inline-item nav-item"><a href="{{ url('user_show', {id: app.user.id}) }}" class="list-inline-item nav-link">{{ 'label.account'|trans }}</a></li>
             {% endif %}
