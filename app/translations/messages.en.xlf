@@ -36,11 +36,11 @@
       </trans-unit>
       <trans-unit id="title.book_details">
         <source>title.book_details</source>
-        <target>Book details:</target>
+        <target>Book details #%id%</target>
       </trans-unit>
       <trans-unit id="title.category_details">
         <source>title.category_details</source>
-        <target>Category details:</target>
+        <target>Category details #%id%</target>
       </trans-unit>
       <trans-unit id="label.id">
         <source>label.id</source>
@@ -241,6 +241,10 @@
       <trans-unit id="title.book_view">
         <source>title.book_view</source>
         <target>book #%id%</target>
+      </trans-unit>
+      <trans-unit id="title.category_view">
+        <source>title.category_view</source>
+        <target>category #%id%</target>
       </trans-unit>
     </body>
   </file>

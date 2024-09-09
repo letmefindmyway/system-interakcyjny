@@ -34,7 +34,7 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             $book = new Book();
             $book->setTitle($this->faker->sentence);
             $book->setAuthor($this->faker->name);
-            $book->setDescription($this->faker->sentences(4, true));
+            $book->setDescription($this->faker->paragraph);
             $book->setReleaseYear(
                 \DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-100 days', '-1 days'))
             );

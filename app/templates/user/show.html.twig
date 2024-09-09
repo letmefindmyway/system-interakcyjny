@@ -6,22 +6,21 @@
 
 {% block body %}
     {% if user is defined and user is not null %}
-
-        <div class="text-muted h5">
+        <div class="text-muted h4 m-3">
             {{ 'title.user_view'|trans({'%id%' : user.id | default('')}) }}
         </div>
 
-        <h1>
+
             {% if is_granted('ROLE_ADMIN') %}
                 {% if app.user.id == user.id %}
-                    {{ 'label.account'|trans }}
+                    <h2>{{ 'label.account'|trans }}</h2>
                 {% else %}
                     {{ 'label.manage_account %username%'|trans({'%username%': user.nickname|default('')}) }}
                 {% endif %}
             {% else %}
                 {{ 'label.account %username%'|trans({'%username%': user.nickname|default('')}) }}
             {% endif %}
-        </h1>
+
 
         <dl class="dl-horizontal mt-4">
             <dt>{{ 'label.nickname'|trans }}</dt>

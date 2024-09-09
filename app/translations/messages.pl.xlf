@@ -36,11 +36,11 @@
       </trans-unit>
       <trans-unit id="title.book_details">
         <source>title.book_details</source>
-        <target>Szczegoly ksiazki:</target>
+        <target>Szczegoly ksiazki #%id%</target>
       </trans-unit>
       <trans-unit id="title.category_details">
         <source>title.category_details</source>
-        <target>Szczegoly kategorii:</target>
+        <target>Szczegoly kategorii #%id%</target>
       </trans-unit>
       <trans-unit id="label.id">
         <source>label.id</source>
@@ -237,6 +237,14 @@
       <trans-unit id="title.comment_delete">
         <source>title.comment_delete</source>
         <target>Usun komentarz</target>
+      </trans-unit>
+      <trans-unit id="title.book_view">
+        <source>title.book_view</source>
+        <target>ksiazka #%id%</target>
+      </trans-unit>
+      <trans-unit id="title.category_view">
+        <source>title.category_view</source>
+        <target>kategoria #%id%</target>
       </trans-unit>
     </body>
   </file>

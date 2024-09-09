@@ -52,7 +52,7 @@ class Book
     /**
      * description.
      */
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 555)]
     private ?string $description = null;
 
     /**

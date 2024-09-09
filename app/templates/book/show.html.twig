@@ -5,31 +5,31 @@
 {% endblock %}
 
 {% block body %}
-    <div class="text-muted h5 m-3">
-        {{ 'title.book_view'|trans({'%id%' : book.id | default('')}) }}
+    <div class="text-muted h4 m-3">
+        {{ 'title.book_details'|trans({'%id%' : book.id | default('')}) }}
     </div>
     {% if book is defined and book|length %}
         <dl class="dl-horizontal">
             <div class="row">
-                <dt class="col-m-2">{{ 'label.title'|trans }}</dt>
-                <dd class="col-m-10">{{  book.title }}</dd>
-                <dt class="col-sm-2">{{ 'label.author'|trans }}</dt>
-                <dd class="col-sm-10">{{  book.author }}</dd>
-                <dt class="col-sm-3">{{ 'label.releaseYear'|trans }}</dt>
-                <dd class="col-sm-9">{{ book.releaseYear|format_date('long') }}</dd>
-                <dt class="col-sm-3">{{ 'label.description'|trans }}</dt>
-                <dd class="col-sm-9">{{  book.description }}</dd>
+                <dt class="col-sm-1">{{ 'label.title'|trans }}</dt>
+                <dd class="col-sm-11">{{  book.title }}</dd>
+                <dt class="col-sm-1">{{ 'label.author'|trans }}</dt>
+                <dd class="col-sm-11 mb-3">{{  book.author }}</dd>
+                <dt class="col-sm-1">{{ 'label.releaseYear'|trans }}</dt>
+                <dd class="col-sm-11">{{ book.releaseYear|format_date('long') }}</dd>
+                <dt class="col-sm-1">{{ 'label.description'|trans }}</dt>
+                <dd class="col-sm-11">{{  book.description }}</dd>
             </div>
             <hr style="color: #00598e;">
             <div class="row">
-                <dt class="col-sm-3">{{ 'label.category'|trans }}</dt>
-                <dd class="col-sm-9">{{  book.category.title }}</dd>
-                <dt class="col-sm-3">{{ 'label.creator_nickname'|trans }}</dt>
-                <dd class="col-sm-9">{{  book.creator.nickname }} &bull; id #{{  book.creator.id }}</dd>
-                <dt class="col-sm-3">{{ 'label.created_at'|trans }}</dt>
-                <dd class="col-sm-9">{{ book.createdAt|format_date('long') }}</dd>
-                <dt class="col-sm-3">{{ 'label.updated_at'|trans }}</dt>
-                <dd class="col-sm-9">{{ book.updatedAt|format_date('long') }}</dd>
+                <dt class="col-sm-1">{{ 'label.category'|trans }}</dt>
+                <dd class="col-sm-11">{{  book.category.title }}</dd>
+                <dt class="col-sm-1">{{ 'label.creator_nickname'|trans }}</dt>
+                <dd class="col-sm-11 mb-3">{{  book.creator.nickname }} &bull; id #{{  book.creator.id }}</dd>
+                <dt class="col-sm-1">{{ 'label.created_at'|trans }}</dt>
+                <dd class="col-sm-11">{{ book.createdAt|format_date('long') }}</dd>
+                <dt class="col-sm-1">{{ 'label.updated_at'|trans }}</dt>
+                <dd class="col-sm-11">{{ book.updatedAt|format_date('long') }}</dd>
             </div>
         </dl>
 
