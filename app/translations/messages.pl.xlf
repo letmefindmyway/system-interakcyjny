@@ -192,7 +192,7 @@
       </trans-unit>
       <trans-unit id="label.nickname">
         <source>label.nickname</source>
-        <target>Nickname</target>
+        <target>Nazwa uzytkownika</target>
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
@@ -200,11 +200,11 @@
       </trans-unit>
       <trans-unit id="action.edit_nickname">
         <source>action.edit_nickname</source>
-        <target>Edytuj nickname</target>
+        <target>Edytuj nazwe uzytkownika</target>
       </trans-unit>
       <trans-unit id="label.edit_nickname">
         <source>label.edit_nickname</source>
-        <target>Edytuj nickname</target>
+        <target>Edytuj nazwe uzytkownika</target>
       </trans-unit>
       <trans-unit id="action.edit_email">
         <source>action.edit_email</source>
@@ -246,10 +246,6 @@
         <source>title.category_view</source>
         <target>kategoria #%id%</target>
       </trans-unit>
-      <trans-unit id="message.field_alphanumeric">
-        <source>message.field_alphanumeric</source>
-        <target>Pole alfanumeryczne</target>
-      </trans-unit>
       <trans-unit id="message.error_password">
         <source>message.error_password</source>
         <target>Blad hasla</target>
@@ -265,6 +261,18 @@
       <trans-unit id="message.no_comments">
         <source>message.no_comments</source>
         <target>Brak komentarzy</target>
+      </trans-unit>
+      <trans-unit id="action.sign_in">
+        <source>action.sign_in</source>
+        <target>Zaloguj sie</target>
+      </trans-unit>
+      <trans-unit id="label.password">
+        <source>label.password</source>
+        <target>Haslo</target>
+      </trans-unit>
+      <trans-unit id="label.remember_me">
+        <source>label.remember_me</source>
+        <target>Zapamietaj mnie</target>
       </trans-unit>
     </body>
   </file>

@@ -246,10 +246,6 @@
         <source>title.category_view</source>
         <target>category #%id%</target>
       </trans-unit>
-      <trans-unit id="message.field_alphanumeric">
-        <source>message.field_alphanumeric</source>
-        <target>Alphanumeric field</target>
-      </trans-unit>
       <trans-unit id="message.error_password">
         <source>message.error_password</source>
         <target>Password error</target>
@@ -265,6 +261,18 @@
       <trans-unit id="message.no_comments">
         <source>message.no_comments</source>
         <target>No comments</target>
+      </trans-unit>
+      <trans-unit id="action.sign_in">
+        <source>action.sign_in</source>
+        <target>Sign in</target>
+      </trans-unit>
+      <trans-unit id="label.password">
+        <source>label.password</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="label.remember_me">
+        <source>label.remember_me</source>
+        <target>Remember me</target>
       </trans-unit>
     </body>
   </file>
